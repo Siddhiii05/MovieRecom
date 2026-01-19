@@ -98,7 +98,7 @@ const swaggerOptions = {
       version: "1.0.0",
       description: "API documentation for trending and upcoming movies",
     },
-    servers: [{ url: "http://localhost:5000" }],
+    servers: [{ url: `http://localhost:${process.env.AAP_PORT}` }],
   },
   apis: ["./routes/*.js"], // scans ALL route files
 };
@@ -126,6 +126,6 @@ app.use("/toprated", topratedRoute);
 // Removed /recomm/:id endpoint as it was calling external Python service
 
 // Start server
-app.listen("5000", () => {
-  console.log("Server is running! on PORT 5000");
+app.listen(process.env.AAP_PORT, () => {
+  console.log(`Server is running! on PORT ${process.env.AAP_PORT}`);
 });
