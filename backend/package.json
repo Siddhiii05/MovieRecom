@@ -15,9 +15,9 @@
     "cookie-parser": "^1.4.5",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^4.21.2",
-    "express-session": "^1.17.1",
-    "mongoose": "^9.0.0",
+    "express-session": "^1.18.2",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
@@ -27,6 +27,7 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "typescript": "^5.9.3"
   }
 }

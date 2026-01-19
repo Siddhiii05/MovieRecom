@@ -60,6 +60,8 @@ const passport = require("passport");
 const authRoute = require("./routes/auth");
 const trendingRoute = require("./routes/trending");
 const upcomingRoute = require("./routes/upcoming");
+const recommendedRoute = require("./routes/recommended");
+const topratedRoute = require("./routes/toprated");
 const request = require("request");
 
 // Swagger dependencies
@@ -72,6 +74,7 @@ const app = express();
 app.use(
   cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
 );
+const session = require("express-session");
 
 // Passport
 app.use(passport.initialize());
@@ -97,25 +100,30 @@ const swaggerOptions = {
     },
     servers: [{ url: "http://localhost:5000" }],
   },
-  apis: ["./routes/*.js"], // 👈 scans ALL route files
+  apis: ["./routes/*.js"], // scans ALL route files
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+app.use((req, res, next) => {
+  if (req.session && !req.session.regenerate) {
+    req.session.regenerate = (cb) => cb(); // no-op
+  }
+  if (req.session && !req.session.save) {
+    req.session.save = (cb) => cb(); // no-op
+  }
+  next();
+});
+
 // Routes
 app.use("/auth", authRoute);
 app.use("/trending", trendingRoute);
 app.use("/upcoming", upcomingRoute);
+app.use("/recommended", recommendedRoute);
+app.use("/toprated", topratedRoute);
 
-app.get("/recomm/:id", function (req, res) {
-  request(`http://127.0.0.1:5000/movie/${req.params.id}`, function (error, response, body) {
-    console.error("error:", error);
-    console.log("statusCode:", response && response.statusCode);
-    console.log("body:", body);
-    res.send(body);
-  });
-});
+// Removed /recomm/:id endpoint as it was calling external Python service
 
 // Start server
 app.listen("5000", () => {

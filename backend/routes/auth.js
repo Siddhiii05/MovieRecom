@@ -20,8 +20,13 @@ router.get("/login/failed", (req, res) => {
   });
 });
 
+// router.get("/logout", (req, res) => {
+//   req.logout();
+//   res.redirect(CLIENT_URL);
+// });
+
 router.get("/logout", (req, res) => {
-  req.logout();
+  req.session = null; // clears cookie-session
   res.redirect(CLIENT_URL);
 });
 
@@ -34,14 +39,5 @@ router.get(
     failureRedirect: "/login/failed",
   })
 );
-/**
- * @swagger
- * /trending:
- *   get:
- *     summary: Get trending movies
- *     responses:
- *       200:
- *         description: List of trending movies
- */
 
 module.exports = router;

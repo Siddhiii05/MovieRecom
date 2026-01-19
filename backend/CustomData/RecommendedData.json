@@ -1,0 +1,413 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "backdrop_path": "/am782sUaTOGcEPEdUUjybwUZP1f.jpg",
+            "id": 520763,
+            "title": "A Quiet Place Part II",
+            "original_title": "A Quiet Place Part II",
+            "overview": "Following the events at home, the Abbott family now face the terrors of the outside world. Forced to venture into the unknown, they realize that the creatures that hunt by sound are not the only threats that lurk beyond the sand path.",
+            "poster_path": "/4q2hz2m8hubgvijz8Ez0T2Os2Yv.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                878,
+                53,
+                27
+            ],
+            "popularity": 6.0785,
+            "release_date": "2021-05-21",
+            "video": false,
+            "vote_average": 7.449,
+            "vote_count": 7082
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/6MKr3KgOLmzOP6MSuZERO41Lpkt.jpg",
+            "id": 337404,
+            "title": "Cruella",
+            "original_title": "Cruella",
+            "overview": "In 1970s London amidst the punk rock revolution, a young grifter named Estella is determined to make a name for herself with her designs. She befriends a pair of young thieves who appreciate her appetite for mischief, and together they are able to build a life for themselves on the London streets. One day, Estella’s flair for fashion catches the eye of the Baroness von Hellman, a fashion legend who is devastatingly chic and terrifyingly haute. But their relationship sets in motion a course of events and revelations that will cause Estella to embrace her wicked side and become the raucous, fashionable and revenge-bent Cruella.",
+            "poster_path": "/hjS9mH8KvRiGHgjk6VUZH7OT0Ng.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                35,
+                80,
+                12
+            ],
+            "popularity": 9.3664,
+            "release_date": "2021-05-26",
+            "video": false,
+            "vote_average": 7.982,
+            "vote_count": 9795
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/g15PR8eQV9DehSWlagvdnJZqoRq.jpg",
+            "id": 602734,
+            "title": "Spiral: From the Book of Saw",
+            "original_title": "Spiral: From the Book of Saw",
+            "overview": "Working in the shadow of an esteemed police veteran, brash Detective Ezekiel “Zeke” Banks and his rookie partner take charge of a grisly investigation into murders that are eerily reminiscent of the city’s gruesome past.  Unwittingly entrapped in a deepening mystery, Zeke finds himself at the center of the killer’s morbid game.",
+            "poster_path": "/cxymmHskQ7RC1Ysg9CxT2vWze9g.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                27,
+                9648
+            ],
+            "popularity": 5.1722,
+            "release_date": "2021-05-12",
+            "video": false,
+            "vote_average": 5.9,
+            "vote_count": 2183
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/wwFBRyekDcKXJwP0mImRJjAnudL.jpg",
+            "id": 632357,
+            "title": "The Unholy",
+            "original_title": "The Unholy",
+            "overview": "Alice is a young hearing-impaired girl who, after a supposed visitation from the Virgin Mary, is inexplicably able to hear, speak and heal the sick. As word spreads and people from near and far flock to witness her miracles, a disgraced journalist hoping to revive his career visits the small New England town to investigate. When terrifying events begin to happen all around, he starts to question if these phenomena are the works of the Virgin Mary or something much more sinister.",
+            "poster_path": "/bShgiEQoPnWdw4LBrYT5u18JF34.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                27,
+                9648
+            ],
+            "popularity": 3.3232,
+            "release_date": "2021-03-31",
+            "video": false,
+            "vote_average": 6.6,
+            "vote_count": 2222
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/ev5Ti7Q0REkoVLO7PkKaq1yZYQE.jpg",
+            "id": 259693,
+            "title": "The Conjuring 2",
+            "original_title": "The Conjuring 2",
+            "overview": "Lorraine and Ed Warren travel to north London to help a single mother raising four children alone in a house plagued by malicious spirits.",
+            "poster_path": "/zEqyD0SBt6HL7W9JQoWwtd5Do1T.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                27
+            ],
+            "popularity": 11.2976,
+            "release_date": "2016-06-08",
+            "video": false,
+            "vote_average": 7.293,
+            "vote_count": 8943
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/aQCCpAIdWAp6wyFgjMry4okwrZo.jpg",
+            "id": 138843,
+            "title": "The Conjuring",
+            "original_title": "The Conjuring",
+            "overview": "Paranormal investigators Ed and Lorraine Warren work to help a family terrorized by a dark presence in their farmhouse. Forced to confront a powerful entity, the Warrens find themselves caught in the most terrifying case of their lives.",
+            "poster_path": "/wVYREutTvI2tmxr6ujrHT704wGF.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                27,
+                53
+            ],
+            "popularity": 15.2839,
+            "release_date": "2013-07-18",
+            "video": false,
+            "vote_average": 7.54,
+            "vote_count": 12350
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/vu5Y8qFqlzcboDbbZIMTAgj0KLb.jpg",
+            "id": 591273,
+            "title": "Fear Street: 1994",
+            "original_title": "Fear Street: 1994",
+            "overview": "After a series of brutal slayings, a teen and her friends take on an evil force that's plagued their notorious town for centuries.",
+            "poster_path": "/9J9Wy39ZjrVmfk7yMkulpcI5sy0.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                27,
+                9648
+            ],
+            "popularity": 2.714,
+            "release_date": "2021-06-28",
+            "video": false,
+            "vote_average": 6.69,
+            "vote_count": 2519
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/3RMbkXS4ocMmoJyAD3ZsWbm32Kx.jpg",
+            "id": 615658,
+            "title": "Awake",
+            "original_title": "Awake",
+            "overview": "After a sudden global event wipes out all electronics and takes away humankind’s ability to sleep, chaos quickly begins to consume the world. Only Jill, an ex-soldier with a troubled past, may hold the key to a cure in the form of her own daughter. The question is, can Jill safely deliver her daughter and save the world before she herself loses her mind.",
+            "poster_path": "/d8WJFQyNNAEmuGeDwxPhBpx0G4B.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                18,
+                878,
+                53
+            ],
+            "popularity": 4.858,
+            "release_date": "2021-06-09",
+            "video": false,
+            "vote_average": 5.9,
+            "vote_count": 1122
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/yizL4cEKsVvl17Wc1mGEIrQtM2F.jpg",
+            "id": 588228,
+            "title": "The Tomorrow War",
+            "original_title": "The Tomorrow War",
+            "overview": "The world is stunned when a group of time travelers arrive from the year 2051 to deliver an urgent message: Thirty years in the future, mankind is losing a global war against a deadly alien species. The only hope for survival is for soldiers and civilians from the present to be transported to the future and join the fight. Among those recruited is high school teacher and family man Dan Forester. Determined to save the world for his young daughter, Dan teams up with a brilliant scientist and his estranged father in a desperate quest to rewrite the fate of the planet.",
+            "poster_path": "/34nDCQZwaEvsy4CFO5hkGRFDCVU.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                28,
+                878,
+                12
+            ],
+            "popularity": 11.725,
+            "release_date": "2021-09-03",
+            "video": false,
+            "vote_average": 7.488,
+            "vote_count": 3883
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/eLPXcqgJPCEOf2cMwyTEXejRhrC.jpg",
+            "id": 250546,
+            "title": "Annabelle",
+            "original_title": "Annabelle",
+            "overview": "A couple begins to experience terrifying supernatural occurrences involving a vintage doll shortly after their home is invaded by satanic cultists.",
+            "poster_path": "/yLsuU2P2SpDYFwtZQ7dtfVAf6TE.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                27
+            ],
+            "popularity": 15.431,
+            "release_date": "2014-10-01",
+            "video": false,
+            "vote_average": 5.788,
+            "vote_count": 6404
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/keIxh0wPr2Ymj0Btjh4gW7JJ89e.jpg",
+            "id": 497698,
+            "title": "Black Widow",
+            "original_title": "Black Widow",
+            "overview": "Natasha Romanoff, also known as Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy and the broken relationships left in her wake long before she became an Avenger.",
+            "poster_path": "/7JPpIjhD2V0sKyFvhB9khUMa30d.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                28,
+                12,
+                878
+            ],
+            "popularity": 9.2581,
+            "release_date": "2021-07-07",
+            "video": false,
+            "vote_average": 7.187,
+            "vote_count": 10862
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/tcBX2dtkNozZ0uDLVaxXrE6rqyN.jpg",
+            "id": 1038392,
+            "title": "The Conjuring: Last Rites",
+            "original_title": "The Conjuring: Last Rites",
+            "overview": "Paranormal investigators Ed and Lorraine Warren take on one last terrifying case involving mysterious entities they must confront.",
+            "poster_path": "/wKwkBuglQtJeNQaLTWzX5SdYvPf.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                27
+            ],
+            "popularity": 70.5106,
+            "release_date": "2025-09-03",
+            "video": false,
+            "vote_average": 6.976,
+            "vote_count": 1358
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/70AV2Xx5FQYj20labp0EGdbjI6E.jpg",
+            "id": 637649,
+            "title": "Wrath of Man",
+            "original_title": "Wrath of Man",
+            "overview": "A cold and mysterious new security guard for a Los Angeles cash truck company surprises his co-workers when he unleashes precision skills during a heist. The crew is left wondering who he is and where he came from. Soon, the marksman's ultimate motive becomes clear as he takes dramatic and irrevocable steps to settle a score.",
+            "poster_path": "/M7SUK85sKjaStg4TKhlAVyGlz3.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                53,
+                80,
+                18
+            ],
+            "popularity": 10.9627,
+            "release_date": "2021-04-22",
+            "video": false,
+            "vote_average": 7.592,
+            "vote_count": 5821
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/cMnVmutb5mVgIBeiMOncAbwNjvG.jpg",
+            "id": 439079,
+            "title": "The Nun",
+            "original_title": "The Nun",
+            "overview": "A priest with a dark past and a novice nearing her final vows are sent by the Vatican to Romania to investigate a nun's death and face a demonic force.",
+            "poster_path": "/sFC1ElvoKGdHJIWRpNB3xWJ9lJA.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                27
+            ],
+            "popularity": 9.8604,
+            "release_date": "2018-09-05",
+            "video": false,
+            "vote_average": 5.908,
+            "vote_count": 7022
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/620hnMVLu6RSZW6a5rwO8gqpt0t.jpg",
+            "id": 508943,
+            "title": "Luca",
+            "original_title": "Luca",
+            "overview": "Luca and his best friend Alberto experience an unforgettable summer on the Italian Riviera. But all the fun is threatened by a deeply-held secret: they are sea monsters from another world just below the water’s surface.",
+            "poster_path": "/9x4i9uKGXt8IiiIF5Ey0DIoY738.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                16,
+                35,
+                14,
+                12,
+                10751
+            ],
+            "popularity": 10.1751,
+            "release_date": "2021-06-17",
+            "video": false,
+            "vote_average": 7.8,
+            "vote_count": 8733
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/jB98SrdXAYSbiprjIwc7WfVCuCV.jpg",
+            "id": 521029,
+            "title": "Annabelle Comes Home",
+            "original_title": "Annabelle Comes Home",
+            "overview": "Determined to keep Annabelle from wreaking more havoc, demonologists Ed and Lorraine Warren bring the possessed doll to the locked artifacts room in their home, placing her “safely” behind sacred glass and enlisting a priest’s holy blessing. But an unholy night of horror awaits as Annabelle awakens the evil spirits in the room, who all set their sights on a new target—the Warrens' ten-year-old daughter, Judy, and her friends.",
+            "poster_path": "/qWsHMrbg9DsBY3bCMk9jyYCRVRs.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                27
+            ],
+            "popularity": 8.4061,
+            "release_date": "2019-06-26",
+            "video": false,
+            "vote_average": 6.409,
+            "vote_count": 3740
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/sSalNFInZxGi0bmmIKJoDz5jI6n.jpg",
+            "id": 710356,
+            "title": "2 Hearts",
+            "original_title": "2 Hearts",
+            "overview": "When illness strikes two people who are polar opposites, life and death bring them together in surprising ways.",
+            "poster_path": "/a7bW3uKOMPBnmHs8gnlpfhTD8YQ.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                10749,
+                18
+            ],
+            "popularity": 7.3798,
+            "release_date": "2020-10-16",
+            "video": false,
+            "vote_average": 7.3,
+            "vote_count": 620
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/wjQXZTlFM3PVEUmKf1sUajjygqT.jpg",
+            "id": 581726,
+            "title": "Infinite",
+            "original_title": "Infinite",
+            "overview": "Evan McCauley has skills he never learned and memories of places he has never visited. Self-medicated and on the brink of a mental breakdown, a secret group that call themselves “Infinites” come to his rescue, revealing that his memories are real.",
+            "poster_path": "/niw2AKHz6XmwiRMLWaoyAOAti0G.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                878,
+                28,
+                12
+            ],
+            "popularity": 4.7279,
+            "release_date": "2021-09-09",
+            "video": false,
+            "vote_average": 6.59,
+            "vote_count": 2027
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/6ELCZlTA5lGUops70hKdB83WJxH.jpg",
+            "id": 460465,
+            "title": "Mortal Kombat",
+            "original_title": "Mortal Kombat",
+            "overview": "Washed-up MMA fighter Cole Young, unaware of his heritage, and hunted by Emperor Shang Tsung's best warrior, Sub-Zero, seeks out and trains with Earth's greatest champions as he prepares to stand against the enemies of Outworld in a high stakes battle for the universe.",
+            "poster_path": "/ybrX94xQm8lXYpZAPRmwD9iIbWP.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                28,
+                14,
+                12
+            ],
+            "popularity": 6.2898,
+            "release_date": "2021-04-07",
+            "video": false,
+            "vote_average": 7.004,
+            "vote_count": 6115
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/uEJuqp08dH6IQwZJGASlPZOXqKu.jpg",
+            "id": 467909,
+            "title": "In the Heights",
+            "original_title": "In the Heights",
+            "overview": "The story of Usnavi, a bodega owner who has mixed feelings about closing his store and retiring to the Dominican Republic or staying in Washington Heights.",
+            "poster_path": "/RO4KoJyoQMQzh9z76d4v4FJMmJ.jpg",
+            "media_type": "movie",
+            "original_language": "en",
+            "genre_ids": [
+                18,
+                10749
+            ],
+            "popularity": 2.4207,
+            "release_date": "2021-06-10",
+            "video": false,
+            "vote_average": 7.1,
+            "vote_count": 762
+        }
+    ],
+    "total_pages": 2,
+    "total_results": 40
+}

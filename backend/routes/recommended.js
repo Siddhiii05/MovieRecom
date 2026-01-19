@@ -1,27 +1,25 @@
 const router = require("express").Router();
-const Upcomingdata = require("../CustomData/Upcomingdata.json");
+const RecommendedData = require("../CustomData/RecommendedData.json");
 
 router.get("/", (req, res) => {
   try {
     res.status(200).json({
       success: true,
-      data: Upcomingdata,
+      data: RecommendedData,
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 });
-
 /**
- * @swagger
- * /upcoming:
+ * @swagger 
+ * /recommended:
  *   get:
- *     summary: Get upcoming movies
- *     description: Returns a list of upcoming movies from JSON data.
+ *     summary: Get recommended movies     
+ *     description: Returns a list of recommended movies from JSON data.
  *     responses:
- *       200:
- *         description: List of upcoming movies
+ *      200:
+ *        description: A list of recommended movies.
  */
-
 module.exports = router;
