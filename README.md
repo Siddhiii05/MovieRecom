@@ -25,17 +25,9 @@ This project is being developed for Microsoft Engage 2022 mentorship program. In
 ## API Credit
 All the images and data used in project is taken from 
 https://developers.themoviedb.org/3/getting-started/introduction
-## Demo
 
-Video Demo Here
-
-https://youtu.be/JMEGCJxRwDo
 ## Run Locally
 
-Clone the project
-
-```bash
-  git clone https://github.com/AnuragRoshan/RecomSystem.git
 ```
 
 Install Python Libraries
@@ -79,14 +71,6 @@ cd ..
 cd client
 npm start
 ```
-## Authors
-
-- [@AnuragRoshan](https://github.com/AnuragRoshan)
-
-
-## Feedback
-
-If you have any feedback, please reach out to us at anuragraushan373@gmail.com
 
 ## Landing Page
 ![mvrs6](https://user-images.githubusercontent.com/68966298/178826347-b572b3e7-d903-4b08-ac6b-0a5009143ade.JPG)
