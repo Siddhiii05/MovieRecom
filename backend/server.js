@@ -98,7 +98,7 @@ const swaggerOptions = {
       version: "1.0.0",
       description: "API documentation for trending and upcoming movies",
     },
-    servers: [{ url: `http://localhost:${process.env.AAP_PORT}` }],
+    servers: [{ url: `http://localhost:${process.env.APP_PORT}` }],
   },
   apis: ["./routes/*.js"], // scans ALL route files
 };
@@ -123,9 +123,25 @@ app.use("/upcoming", upcomingRoute);
 app.use("/recommended", recommendedRoute);
 app.use("/toprated", topratedRoute);
 
+// Root route
+app.get("/", (req, res) => {
+  res.json({
+    message: "Welcome to Movie Recommendation API",
+    version: "1.0.0",
+    endpoints: {
+      auth: "/auth",
+      trending: "/trending",
+      upcoming: "/upcoming",
+      recommended: "/recommended",
+      toprated: "/toprated",
+      docs: "/api-docs"
+    }
+  });
+});
+
 // Removed /recomm/:id endpoint as it was calling external Python service
 
 // Start server
-app.listen(process.env.AAP_PORT, () => {
-  console.log(`Server is running! on PORT ${process.env.AAP_PORT}`);
+app.listen(process.env.APP_PORT, () => {
+  console.log(`Server is running! on PORT ${process.env.APP_PORT}`);
 });
