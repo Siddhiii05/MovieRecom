@@ -4,12 +4,12 @@ const RecommendedData = require("../CustomData/RecommendedData.json");
 router.get("/", (req, res) => {
   try {
     res.status(200).json({
-      success: true,
+      success: "true",
       data: RecommendedData,
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, error: "Internal Server Error" });
+    res.status(500).json({ success: "false", error: "Internal Server Error" });
   }
 });
 /**
