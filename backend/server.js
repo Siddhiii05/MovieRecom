@@ -1,60 +1,11 @@
-// const cookieSession = require("cookie-session");
-// const express = require("express");
-// const cors = require("cors");
-// const passportSetup = require("./passport");
-// const passport = require("passport");
-// const authRoute = require("./routes/auth");
-// const trendingRoute = require("./routes/trending");
-// const app = express();
-// const request = require("request")
-
-
-// app.use(
-//   cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
-// );
-
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//     methods: "GET,POST,PUT,DELETE",
-//     credentials: true,
-//   })
-// );
-
-// app.use("/auth", authRoute);
-// app.use("/trending", trendingRoute);
-
-
-// // app.get('/:id', function (req, res) {
-// app.get('/recomm/:id', function (req, res) {
-//   // const { id } = useParams();
-
-//   // request(`http://127.0.0.1:5000/movie/Hulk`, function (error, response, body) {
-//   request(`http://127.0.0.1:5000/movie/` + req.params.id, function (error, response, body) {
-//     console.error('error:', error); // Print the error
-//     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-//     console.log('body:', body); // Print the data received
-//     res.send(body); //Display the response on the website
-//   });
-// });
-
-
-
-// app.listen("5000", () => {
-//   console.log("Server is running! on PORT 5000");
-// });
-
-
 // Load local environment variables from .env (if present)
 require('dotenv').config();
 
 const cookieSession = require("cookie-session");
 const express = require("express");
 const cors = require("cors");
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 const passportSetup = require("./Passport");
 const passport = require("passport");
 const authRoute = require("./routes/auth");
@@ -107,28 +58,35 @@ const swaggerOptions = {
     },
     servers: [{ url: `http://localhost:${process.env.APP_PORT}` }],
   },
-  apis: ["./routes/*.js"], // scans ALL route files
+  apis: ["./routes/*.js", "./server.js"], // scans ALL route files
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use((req, res, next) => {
-  if (req.session && !req.session.regenerate) {
-    req.session.regenerate = (cb) => cb(); // no-op
+// Endpoint to get all top rated movies
+app.get('/api/findmovies', async (req, res) => {
+  try {
+    const movies = await prisma.tbl_toprated.findMany();
+    res.json({
+      success: true,
+      data: movies
+    });
+  } catch (error) {
+    console.error('Error fetching top rated movies:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching top rated movies'
+    });
   }
-  if (req.session && !req.session.save) {
-    req.session.save = (cb) => cb(); // no-op
-  }
-  next();
 });
 
 // Routes
+app.use("/toprated", topratedRoute);
 app.use("/auth", authRoute);
 app.use("/trending", trendingRoute);
 app.use("/upcoming", upcomingRoute);
 app.use("/recommended", recommendedRoute);
-app.use("/toprated", topratedRoute);
 app.use("/searchpages", searchpagesRoute);
 app.use("/carousel1", carousel1Route);
 app.use("/carousel2", carousel2Route);
@@ -161,7 +119,16 @@ app.get("/", (req, res) => {
   });
 });
 
-// Removed /recomm/:id endpoint as it was calling external Python service
+
+app.use((req, res, next) => {
+  if (req.session && !req.session.regenerate) {
+    req.session.regenerate = (cb) => cb(); // no-op
+  }
+  if (req.session && !req.session.save) {
+    req.session.save = (cb) => cb(); // no-op
+  }
+  next();
+});
 
 // Start server
 app.listen(process.env.APP_PORT, () => {
