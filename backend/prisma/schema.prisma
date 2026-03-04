@@ -1,0 +1,243 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model tbl_toprated {
+  id                Int     @id @default(autoincrement())
+  title             String? @db.VarChar(255)
+  original_title    String? @db.VarChar(255)
+  original_language String? @db.VarChar(10)
+  overview          String?
+  release_date      DateTime?
+  popularity        Float?
+  poster_path       String? @db.VarChar(255)
+  backdrop_path     String? @db.VarChar(255)
+  vote_average      Float?
+  vote_count        Int?
+  adult             Boolean?
+  video             Boolean?
+  genre_ids         String?
+}
+
+model tbl_movietypes {
+  id            Int      @id @default(autoincrement())
+  title         String?  @db.VarChar(255)
+}
+
+
+model tbl_trending {
+  id                Int     @id
+  title             String? @db.VarChar(255)
+  original_title    String? @db.VarChar(255)
+  original_language String? @db.VarChar(10)
+  overview          String?
+  release_date      DateTime?
+  popularity        Float?
+  poster_path       String? @db.VarChar(255)
+  backdrop_path     String? @db.VarChar(255)
+  media_type        String? @db.VarChar(50)
+  vote_average      Float?
+  vote_count        Int?
+  adult             Boolean?
+  video             Boolean?
+  genre_ids         String?
+
+}
+
+
+model tbl_upcoming {
+  id                Int      @id
+  adult             Boolean?
+  backdrop_path     String?  @db.VarChar(255)
+  genre_ids         String?
+  original_language String?  @db.VarChar(10)
+  original_title    String?  @db.VarChar(255)
+  overview          String?
+  popularity        Float?
+  poster_path       String?  @db.VarChar(255)
+  release_date      DateTime?
+  title             String?  @db.VarChar(255)
+  video             Boolean?
+  vote_average      Float?
+  vote_count        Int?
+
+  @@map("tbl_upcoming")
+}
+
+
+model tbl_filter {
+  id            Int  @id @default(autoincrement())
+  page          Int?
+  total_pages   Int?
+  total_results Int?
+
+}
+
+
+model tbl_searchpages {
+  id                Int       @id
+  page              Int?
+  total_pages       Int?
+  total_results     Int?
+  title             String?   @db.VarChar(255)
+  original_title    String?   @db.VarChar(255)
+  original_language String?   @db.VarChar(10)
+  overview          String?
+  release_date      DateTime?
+  popularity        Float?
+  poster_path       String?   @db.VarChar(255)
+  backdrop_path     String?   @db.VarChar(255)
+  vote_average      Float?
+  vote_count        Int?
+  adult             Boolean?
+  video             Boolean?
+  genre_ids         String?   // Store as JSON string like "[18,28,80]"
+}
+
+
+model tbl_recommended {
+  id                Int      @id
+  page              Int?
+  total_pages       Int?
+  total_results     Int?
+
+  title             String?  @db.VarChar(255)
+  original_title    String?  @db.VarChar(255)
+  original_language String?  @db.VarChar(10)
+  overview          String?
+
+  release_date      DateTime?
+  popularity        Float?
+
+  poster_path       String?  @db.VarChar(255)
+  backdrop_path     String?  @db.VarChar(255)
+  media_type        String?  @db.VarChar(50)
+
+  vote_average      Float?
+  vote_count        Int?
+
+  adult             Boolean?
+  video             Boolean?
+
+  genre_ids         String?
+}
+
+
+model tbl_carousel1 {
+  id                Int      @id
+  page              Int?
+  total_pages       Int?
+  total_results     Int?
+
+  title             String?  @db.VarChar(255)
+  original_title    String?  @db.VarChar(255)
+  original_language String?  @db.VarChar(10)
+  overview          String?
+
+  release_date      DateTime?
+  popularity        Float?
+
+  poster_path       String?  @db.VarChar(255)
+  backdrop_path     String?  @db.VarChar(255)
+
+  vote_average      Float?
+  vote_count        Int?
+
+  adult             Boolean?
+  video             Boolean?
+
+  genre_ids         String?
+}
+
+
+model tbl_carousel2 {
+  id                Int      @id
+  title             String
+  original_title    String
+  overview          String   @db.Text
+  backdrop_path     String?
+  poster_path       String?
+  media_type        String
+  original_language String
+  genre_ids         Json
+  popularity        Float
+  release_date      DateTime?
+  video             Boolean
+  vote_average      Float
+  vote_count        Int
+  adult             Boolean
+}
+
+model tbl_carousel3 {
+  id                Int      @id
+
+  title             String
+  original_title    String
+  original_language String
+  overview          String   @db.Text
+
+  release_date      DateTime?
+  popularity        Float
+
+  poster_path       String?
+  backdrop_path     String?
+
+  vote_average      Float
+  vote_count        Int
+
+  adult             Boolean
+  video             Boolean
+  media_type        String
+
+  genre_ids         String?
+}
+
+
+model tbl_carousel4 {
+  id                Int      @id
+
+  title             String
+  original_title    String?
+  original_language String?
+  overview          String?  @db.Text
+
+  release_date      DateTime?
+  popularity        Float?
+
+  poster_path       String?
+  backdrop_path     String?
+
+  vote_average      Float?
+  vote_count        Int?
+
+  adult             Boolean?
+  video             Boolean?
+  media_type        String?
+
+  genre_ids         String?
+}
+
+
+model tbl_carousel5 {
+  id                Int       @id
+  title             String
+  original_title    String?
+  overview          String?
+  backdrop_path     String?
+  poster_path       String?
+  media_type        String?
+  original_language String?
+  genre_ids         Int[]
+  popularity        Float?
+  release_date      DateTime?
+  video             Boolean?
+  vote_average      Float?
+  vote_count        Int?
+  adult             Boolean?
+  created_at        DateTime  @default(now())
+}
