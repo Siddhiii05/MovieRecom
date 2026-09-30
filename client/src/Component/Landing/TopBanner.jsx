@@ -63,7 +63,7 @@ const TopBanner = () => {
             variant="h1"
           >
             {" "}
-            MoviesVerse
+            CineGenie
           </Typography>
           <Typography
             style={{
@@ -78,7 +78,7 @@ const TopBanner = () => {
             Internet
           </Typography>
           <Button onClick={() => navigate(`/home`)} className={classes.btn}>
-            Lets get Into MoviesVerse
+            Let's get Into CineGenie
           </Button>
         </div>
 

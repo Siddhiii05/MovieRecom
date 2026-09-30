@@ -72,7 +72,7 @@ function App() {
 
           < Route exact path="/" element={<Landing funcNav={setShowNav} />} />
           < Route exact path="/home" element={<Home />} />
-          <Route exact path="/detail/:id/:title" element={<Detailview />} />
+          < Route exact path="/detail/:id/:title" element={<Detailview />} />
           < Route exact path="/trending" element={<TrendingToday />} />
           < Route exact path="/login" element={user ? <Navigate to="/" /> : <Login />} />
           < Route exact path="/casts/:id" element={<CastDetail />} />

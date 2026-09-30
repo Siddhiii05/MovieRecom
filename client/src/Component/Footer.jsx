@@ -73,14 +73,6 @@ const Footer = ({ user }) => {
             <Button onClick={() => navigate(`/login`)}>Login</Button>
           </Typography>
         )}
-        <a
-          style={{ textDecoration: "none" }}
-          href="https://anuragroshan.github.io/mycv/"
-        >
-          <Typography style={{ color: "black" }}>
-            <Button>About Developer</Button>
-          </Typography>
-        </a>
         <Typography style={{ color: "black" }}>
           <Link to={"/trending"} style={{ textDecoration: "none" }}>
             <Button>Trendings</Button>
@@ -127,7 +119,7 @@ const Footer = ({ user }) => {
             style={{ color: "black" }}
             align="center"
           >
-            MoviesVerse
+            CineGenie
           </Typography>
         </div>
         <Typography style={{ marginBlock: "20px" }} align="center">
@@ -135,27 +127,23 @@ const Footer = ({ user }) => {
         </Typography>
         <div style={{ display: "flex", flexDirection: "row" }}>
             <Button style={{ flex: "1" }} align="center">
-          <a style={{ color:"black" }} href="https://www.instagram.com/amnu_rag_15/" target="_blank" rel="noopener noreferrer">
+          <a style={{ color:"black" }} href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
               <InstagramIcon fontSize="large" />
           </a>
             </Button>
             <Button style={{ flex: "1" }} align="center">
-          <a style={{ color:"black" }} href="mailto:anuragraushan373@gmail.com" target="_blank" rel="noopener noreferrer">
+          <a style={{ color:"black" }} href="mailto:siddhi.bobade05@gmail.com" target="_blank" rel="noopener noreferrer">
               <MailOutlineIcon fontSize="large" />
           </a>
             </Button>
+            
             <Button style={{ flex: "1" }} align="center">
-          <a style={{ color:"black" }} href="https://twitter.com/AnuRagRoshan15" target="_blank" rel="noopener noreferrer">
-              <TwitterIcon fontSize="large" />
-          </a>
-            </Button>
-            <Button style={{ flex: "1" }} align="center">
-          <a style={{ color:"black" }} href="https://www.linkedin.com/in/anurag-roshan/" target="_blank" rel="noopener noreferrer"> 
+          <a style={{ color:"black" }} href="https://www.linkedin.com/in/siddhi-bobade/" target="_blank" rel="noopener noreferrer"> 
               <LinkedInIcon fontSize="large" />
           </a>
             </Button>
             <Button style={{ flex: "1" }} align="center">
-          <a style={{ color:"black" }} href="https://github.com/AnuragRoshan" target="_blank" rel="noopener noreferrer">
+          <a style={{ color:"black" }} href="https://github.com/Siddhiii05" target="_blank" rel="noopener noreferrer">
               <GitHubIcon fontSize="large" />
           </a>
             </Button>
@@ -165,7 +153,7 @@ const Footer = ({ user }) => {
             style={{ fontWeight: "600", paddingTop: 10 }}
             align="center"
           >
-            © 2022 MoviesVerse
+            © 2025 CineGenie
           </Typography>
         </div>
       </div>
