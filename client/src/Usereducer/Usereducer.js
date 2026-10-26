@@ -1,16 +1,14 @@
-export const initialState = null
+export const initialState = null;
 
 export const reducer = (state, action) => {
-    if (action.type === "user") {
-     
-        return action.payload;
-    }
-    else if (action.type === "CLEAR") {
+  switch (action.type) {
+    case "user":
+      return action.payload;
 
-        return null;
-    }
-    else {
-        return state
-    }
+    case "CLEAR":
+      return null;
 
-}
+    default:
+      return state;
+  }
+};

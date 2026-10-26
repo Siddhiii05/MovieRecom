@@ -1,19 +1,24 @@
-import React, { useEffect } from 'react'
-import DetailBanner from '../Component/DetailView/DetailBanner';
+import React, { useEffect } from "react";
+import DetailBanner from "../Component/DetailView/DetailBanner";
 
-
-function Detailview() {
+const Detailview = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    
   }, []);
+
   return (
-    <div style={{color:"white",marginTop:"88px"}}>
- 
-      <DetailBanner/>
+    <main
+      style={{
+        color: "#f5f2fa",
+        paddingTop: "88px",
+        minHeight: "100vh",
+        width: "100%",
+        boxSizing: "border-box",
+      }}
+    >
+      <DetailBanner />
+    </main>
+  );
+};
 
-    </div>
-  )
-}
-
-export default Detailview
+export default Detailview;

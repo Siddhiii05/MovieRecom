@@ -1,163 +1,171 @@
-import {
-  Button,
-  Container,
-  makeStyles,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Button, TextField, Typography } from "@material-ui/core";
+import { useNavigate } from "react-router-dom";
+
 import InstagramIcon from "@mui/icons-material/Instagram";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import SearchIcon from "@mui/icons-material/Search";
 
-const Footer = ({ user }) => {
-  const useStyles = makeStyles(() => ({
-    body: {
-      fontFamily: "Montserrat",
-    },
-    title: {
-      color: "#123d6e",
-      fontFamily: "Montserrat",
-      fontWeight: "bold",
-      cursor: "pointer",
-    },
-    topDiv:{
-      backgroundColor: "#e2e7e9",
-      alignItems: "center",
-      marginTop: "9.1rem",
-      height: "40vh",
-      paddingBlock: "40px",
-      display: "flex",
-      bottom: "0px",
-      width:"100%",
-      flexDirection: "row",
-      "@media (max-width:780px)": {
-        flexDirection: "column",
-        marginTop:"3rem",
-      height: "70vh",
-      },
-    }
-  }));
-  const classes = useStyles();
+import "./style.css";
 
+const Footer = ({ user }) => {
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
-  return (
-    <Container
-    className={classes.topDiv}
-      style={{
-        
-      }}
-    >
-      <div
-        style={{
-          flex: 2,
-          display: "flex",
-          flexDirection: "column",
-          paddingLeft: "10px",
-        }}
-      >
-        {user ? (
-          <>
-            <Typography style={{ color: "black" }}>
-              <Button>Hey Wassup {user.name.givenName}</Button>
-            </Typography>
-          </>
-        ) : (
-          <Typography style={{ color: "black" }}>
-            <Button onClick={() => navigate(`/login`)}>Login</Button>
-          </Typography>
-        )}
-        <Typography style={{ color: "black" }}>
-          <Link to={"/trending"} style={{ textDecoration: "none" }}>
-            <Button>Trendings</Button>
-          </Link>
-        </Typography>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <TextField
-            InputLabelProps={{}}
-            id="outlined-search"
-            label="Search Movies Here"
-            type="search"
-            style={{
-              width: "100%",
-              color: "black",
-              marginLeft: "9px",
-            }}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <Button
-            style={{ marginBottom: 15, height: "50px" }}
-            onClick={() => navigate(`/search/${searchText}`)}
-          >
-            <SearchIcon />
-          </Button>
-        </div>
-      </div>
 
-      <div
-        style={{
-          flex: 3,
-          display: "flex",
-          flexDirection: "column",
-          paddingLeft: "1px",
-          width: "60%",
-        }}
-      >
-        {" "}
-        <div>
-          <Typography
-            className={classes.title}
-            onClick={() => Navigate("/")}
-            variant="h6"
-            padding="10px"
-            style={{ color: "black" }}
-            align="center"
-          >
-            CineGenie
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const query = searchText.trim();
+    if (!query) {
+      return;
+    }
+    navigate(`/search/${encodeURIComponent(query)}`);
+  };
+
+  const getDisplayName = () => {
+    if (typeof user?.displayName === "string" && user.displayName.trim()) {
+      return user.displayName;
+    }
+
+    if (typeof user?.name === "string" && user.name.trim()) {
+      return user.name;
+    }
+
+    if (user?.name?.givenName) {
+      return user.name.givenName;
+    }
+
+    return "Movie lover";
+  };
+
+  return (
+    <footer className="cine-footer">
+      <div className="cine-footer-content">
+        {/* Quick links and search */}
+        <section className="cine-footer-navigation">
+          <Typography className="cine-footer-heading">
+            Explore
           </Typography>
-        </div>
-        <Typography style={{ marginBlock: "20px" }} align="center">
-          Connect With Us
-        </Typography>
-        <div style={{ display: "flex", flexDirection: "row" }}>
-            <Button style={{ flex: "1" }} align="center">
-          <a style={{ color:"black" }} href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-              <InstagramIcon fontSize="large" />
-          </a>
+
+          {user ? (
+            <p className="cine-footer-welcome">
+              Welcome back, {getDisplayName()}!
+            </p>
+          ) : (
+            <Button
+              className="cine-footer-link"
+              onClick={() => navigate("/login")}
+            >
+              Sign in to CineGenie
             </Button>
-            <Button style={{ flex: "1" }} align="center">
-          <a style={{ color:"black" }} href="mailto:siddhi.bobade05@gmail.com" target="_blank" rel="noopener noreferrer">
-              <MailOutlineIcon fontSize="large" />
-          </a>
-            </Button>
-            
-            <Button style={{ flex: "1" }} align="center">
-          <a style={{ color:"black" }} href="https://www.linkedin.com/in/siddhi-bobade/" target="_blank" rel="noopener noreferrer"> 
-              <LinkedInIcon fontSize="large" />
-          </a>
-            </Button>
-            <Button style={{ flex: "1" }} align="center">
-          <a style={{ color:"black" }} href="https://github.com/Siddhiii05" target="_blank" rel="noopener noreferrer">
-              <GitHubIcon fontSize="large" />
-          </a>
-            </Button>
-        </div>
-        <div>
-          <Typography
-            style={{ fontWeight: "600", paddingTop: 10 }}
-            align="center"
+          )}
+
+          <Button
+            className="cine-footer-link"
+            onClick={() => navigate("/home")}
           >
-            © 2025 CineGenie
+            Home
+          </Button>
+
+          <Button
+            className="cine-footer-link"
+            onClick={() => navigate("/trending")}
+          >
+            Trending Movies
+          </Button>
+
+          <Button
+            className="cine-footer-link"
+            onClick={() => navigate("/upcoming")}
+          >
+            Upcoming Movies
+          </Button>
+
+          <form className="cine-footer-search" onSubmit={handleSearch}>
+            <TextField
+              className="cine-footer-search-input"
+              value={searchText}
+              onChange={(event) => setSearchText(event.target.value)}
+              placeholder="Find a movie..."
+              variant="standard"
+              fullWidth
+              InputProps={{
+                disableUnderline: true,
+                inputProps: {
+                  "aria-label": "Search for a movie",
+                },
+              }}
+            />
+
+            <button
+              type="submit"
+              className="cine-footer-search-button"
+              aria-label="Search movies"
+              disabled={!searchText.trim()}
+            >
+              <SearchIcon />
+            </button>
+          </form>
+        </section>
+
+        {/* Branding and social links */}
+        <section className="cine-footer-brand-section">
+          <button
+            type="button"
+            className="cine-footer-brand"
+            onClick={() => navigate("/")}
+            aria-label="Go to CineGenie landing page"
+          >
+            Cine<span>Genie</span>
+          </button>
+
+          <p className="cine-footer-description">
+            Discover your next favorite movie.
+          </p>
+
+          <div className="cine-footer-socials" aria-label="Social links">
+            <a
+              href="https://www.instagram.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <InstagramIcon />
+            </a>
+
+            <a
+              href="mailto:siddhi.bobade05@gmail.com"
+              aria-label="Email"
+            >
+              <MailOutlineIcon />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/siddhi-bobade/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <LinkedInIcon />
+            </a>
+
+            <a
+              href="https://github.com/Siddhiii05"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <GitHubIcon />
+            </a>
+          </div>
+
+          <Typography className="cine-footer-copyright">
+            © {new Date().getFullYear()} CineGenie. All rights reserved.
           </Typography>
-        </div>
+        </section>
       </div>
-    </Container>
+    </footer>
   );
 };
 

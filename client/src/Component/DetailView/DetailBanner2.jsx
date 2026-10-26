@@ -1,15 +1,199 @@
-import { makeStyles, Tooltip, Typography } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  makeStyles,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 import { useParams } from "react-router-dom";
-import CastCarousel from "./CastCarousel";
 import Axios from "axios";
-import { img_300 } from "../../Config/Config";
+
+import CastCarousel from "./CastCarousel";
 import RecomCarousel2 from "./RecomCarousel2";
 import ApiRecomCarousel2 from "./ApiRecomCarousel2";
+import { img_300 } from "../../Config/Config";
 
-export function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// Keep your existing arr variable/import if it is defined elsewhere.
+// Add your existing movie IDs to this array if you use personalized recommendations.
+
+
+const API_KEY = "b9e11d2c8939104a4a755544e4eb8847";
+
+export function numberWithCommas(value) {
+  const number = Number(value);
+
+  if (!Number.isFinite(number)) {
+    return "0";
+  }
+
+  return number.toLocaleString("en-US");
 }
+
+const useStyles = makeStyles(() => ({
+  page: {
+    width: "100%",
+    color: "#f5f5f5",
+    overflow: "hidden",
+  },
+
+  topdiv: {
+    margin: "40px",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: "38px",
+
+    "@media (max-width: 780px)": {
+      margin: "24px",
+      flexDirection: "column",
+      gap: "24px",
+    },
+
+    "@media (max-width: 480px)": {
+      margin: "16px",
+    },
+  },
+
+  posterContainer: {
+    width: "40%",
+    flexShrink: 0,
+
+    "@media (max-width: 850px)": {
+      width: "100%",
+      maxWidth: "420px",
+      margin: "0 auto",
+    },
+  },
+
+  movieBanner: {
+    display: "block",
+    width: "100%",
+    maxHeight: "600px",
+    objectFit: "cover",
+    borderRadius: "14px",
+    backgroundColor: "#191919",
+    border: "1px solid rgba(212, 175, 55, 0.25)",
+    boxShadow: "0 12px 35px rgba(0, 0, 0, 0.45)",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+
+    "&:hover": {
+      transform: "scale(1.015)",
+      boxShadow: "0 16px 40px rgba(212, 175, 55, 0.15)",
+    },
+
+    "@media (max-width: 850px)": {
+      maxHeight: "560px",
+    },
+
+    "@media (max-width: 480px)": {
+      maxHeight: "460px",
+    },
+  },
+
+  detailsContainer: {
+    flex: 1,
+    minWidth: 0,
+    fontFamily: "Montserrat, sans-serif",
+    lineHeight: 1.8,
+
+    "@media (max-width: 850px)": {
+      width: "100%",
+    },
+  },
+
+  movieTitle: {
+    fontSize: "2.5rem",
+    fontWeight: 700,
+    lineHeight: 1.25,
+    color: "#f5f5f5",
+    marginBottom: "18px",
+    overflowWrap: "anywhere",
+
+    "@media (max-width: 600px)": {
+      fontSize: "1.8rem",
+    },
+  },
+
+  detailRow: {
+    fontSize: "1rem",
+    color: "#d0d0d0",
+    marginBottom: "8px",
+
+    "& b": {
+      color: "#d4af37",
+      fontWeight: 600,
+    },
+  },
+
+  rating: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "6px",
+    color: "#f5d76e",
+    fontWeight: 600,
+  },
+
+  overviewTitle: {
+    color: "#d4af37",
+    fontSize: "1.15rem",
+    fontWeight: 700,
+    marginTop: "18px",
+    marginBottom: "6px",
+  },
+
+  overview: {
+    color: "#c8c8c8",
+    fontSize: "0.98rem",
+    lineHeight: 1.8,
+    overflowWrap: "anywhere",
+  },
+
+  section: {
+    marginTop: "48px",
+    padding: "0 30px",
+
+    "@media (max-width: 600px)": {
+      padding: "0 16px",
+      marginTop: "36px",
+    },
+  },
+
+  sectionTitle: {
+    fontFamily: "Montserrat, sans-serif",
+    fontWeight: 700,
+    color: "#d4af37",
+    borderLeft: "4px solid #d4af37",
+    paddingLeft: "14px",
+    marginBottom: "18px",
+  },
+
+  recommendationSection: {
+    marginTop: "48px",
+    paddingTop: "20px",
+  },
+
+  status: {
+    minHeight: "60vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    gap: "12px",
+    padding: "24px",
+    color: "#d4af37",
+    textAlign: "center",
+  },
+
+  retryButton: {
+    color: "#111",
+    backgroundColor: "#d4af37",
+    textTransform: "none",
+    fontWeight: 700,
+
+    "&:hover": {
+      backgroundColor: "#f0ce58",
+    },
+  },
+}));
 
 const DetailBanner = () => {
   const arr = [
@@ -4817,141 +5001,196 @@ const DetailBanner = () => {
     "126186",
     "25975",
   ];
-
+  
+  const classes = useStyles();
   const { id } = useParams();
-  const [content, setContent] = useState([]);
-  const fetchTrending = async () => {
-    const { data } = await Axios.get(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=b9e11d2c8939104a4a755544e4eb8847&language=en-US`
-    );
-    setContent(data);
-  };
+
+  const [content, setContent] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  const fetchMovieDetails = useCallback(async () => {
+    if (!id) {
+      setError(true);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(false);
+
+      const { data } = await Axios.get(
+        `https://api.themoviedb.org/3/movie/${id}`,
+        {
+          params: {
+            api_key: API_KEY,
+            language: "en-US",
+          },
+        }
+      );
+
+      setContent(data);
+    } catch (err) {
+      console.error("Failed to fetch movie details:", err);
+      setError(true);
+      setContent(null);
+    } finally {
+      setLoading(false);
+    }
+  }, [id]);
 
   useEffect(() => {
-    fetchTrending();
-    // eslint-disable-next-line
-  }, []);
+    fetchMovieDetails();
+  }, [fetchMovieDetails]);
 
-  const useStyle = makeStyles(() => ({
-    topdiv: {
-      margin: "50px",
-      display: "flex",
-      flexDirection: "row",
-      "@media (max-width:780px)": {
-        flexDirection: "column",
-      },
-    },
-    secondTopdiv: {
-      width: "50%",
-      "@media (max-width:850px)": {
-        width: "100%",
-      },
-    },
-    movieiBanner: {
-      height: "500px",
-      width: "100%",
-      '&:hover': {
-        background: "#e2e7e9",
-        color:"black",
-        boxShadow: "-2px -4px 400px -37px rgba(158,158,150,0.95);"
-     },
-      "@media (max-width:850px)": {
-        height: "800px",
-        width: "100%",
-      },
-    },
-  }));
+  if (loading) {
+    return (
+      <div className={classes.status} role="status">
+        <Typography variant="h6">Loading movie details...</Typography>
+      </div>
+    );
+  }
 
-  const classes = useStyle();
+  if (error || !content) {
+    return (
+      <div className={classes.status} role="alert">
+        <Typography variant="h6">
+          Unable to load movie details.
+        </Typography>
 
-  return (
-    <div style={{ width: "100%" }}>
-      <div className={classes.topdiv}>
-        <div className={classes.secondTopdiv}>
-          <img
-            className={classes.movieiBanner}
-            alt={content.title}
-            src={`${img_300}/${content.poster_path}`}
-          ></img>
-        </div>
-        <div
+        <button
+          type="button"
+          onClick={fetchMovieDetails}
           style={{
-            marginLeft: "38px",
-            display: "flex",
-            width: "100%",
-            flexDirection: "column",
-            fontFamily: "montserrat",
-            lineHeight: "40px",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "6px",
+            backgroundColor: "#d4af37",
+            color: "#111",
+            cursor: "pointer",
+            fontWeight: 700,
           }}
         >
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            {" "}
-            <Typography style={{ fontSize: "40px", fontWeight: "700" }}>
-              {content.original_title}
-            </Typography>
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
+  const runtimeHours = Math.floor((content.runtime || 0) / 60);
+  const runtimeMinutes = (content.runtime || 0) % 60;
+
+  const isPersonalizedMovie = arr.includes(String(id));
+
+  return (
+    <div className={classes.page}>
+      <div className={classes.topdiv}>
+        <div className={classes.posterContainer}>
+          <img
+            className={classes.movieBanner}
+            alt={`${content.title || "Movie"} poster`}
+            src={
+              content.poster_path
+                ? `${img_300}${content.poster_path}`
+                : "/placeholder-movie.png"
+            }
+          />
+        </div>
+
+        <div className={classes.detailsContainer}>
+          <Typography component="h1" className={classes.movieTitle}>
+            {content.original_title || content.title || "Untitled Movie"}
+          </Typography>
+
+          <div className={classes.detailRow}>
+            <b>Release Date:</b>{" "}
+            {content.release_date || "Not available"}
           </div>
-          <div style={{ fontSize: "20px" }}>
-            Release Date : {content.release_date}
+
+          <div className={classes.detailRow}>
+            <b>Runtime:</b>{" "}
+            {content.runtime
+              ? `${runtimeHours}h ${runtimeMinutes}m`
+              : "Not available"}
           </div>
-          <div>
-            <b>Runtime : </b>
-            {Math.floor(content.runtime / 60)}h {content.runtime % 60}m
-          </div>
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <Tooltip title="User Rating">
-              <div style={{ alignSelf: "center" }}>
-                <b>Rating :</b> {content.vote_average} / 10
-              </div>
+
+          <div className={classes.detailRow}>
+            <Tooltip title="Average user rating on TMDB">
+              <span className={classes.rating}>
+                <b>Rating:</b>{" "}
+                {typeof content.vote_average === "number"
+                  ? `${content.vote_average.toFixed(1)} / 10`
+                  : "Not available"}
+              </span>
             </Tooltip>
           </div>
-          <div>
-            <b> Budget : </b>$ {numberWithCommas(`${content.budget}`)}
+
+          <div className={classes.detailRow}>
+            <b>Budget:</b>{" "}
+            {content.budget
+              ? `$ ${numberWithCommas(content.budget)}`
+              : "Not available"}
           </div>
-          <div>
-            {" "}
-            <b> Gross Collection :</b> ${" "}
-            {numberWithCommas(`${content.revenue}`)}
+
+          <div className={classes.detailRow}>
+            <b>Gross Collection:</b>{" "}
+            {content.revenue
+              ? `$ ${numberWithCommas(content.revenue)}`
+              : "Not available"}
           </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <b>
-              {" "}
-              <div>Overview:</div>
-            </b>
-            <div>{content.overview}</div>
+
+          {content.genres && content.genres.length > 0 && (
+            <div className={classes.detailRow}>
+              <b>Genres:</b>{" "}
+              {content.genres.map((genre) => genre.name).join(", ")}
+            </div>
+          )}
+
+          <div>
+            <Typography
+              component="h2"
+              className={classes.overviewTitle}
+            >
+              Overview
+            </Typography>
+
+            <Typography component="p" className={classes.overview}>
+              {content.overview || "No overview available for this movie."}
+            </Typography>
           </div>
         </div>
       </div>
-      <div>
-        <Typography
-          variant="h5"
-          style={{
-            fontFamily: "Montserrat",
-            fontWeight: "700",
-            color: "white",
 
-            paddingLeft: "30px",
-          }}
+      <section className={classes.section}>
+        <Typography
+          component="h2"
+          variant="h5"
+          className={classes.sectionTitle}
         >
           Cast
         </Typography>
+
         <CastCarousel />
-      </div>
-      <div style={{ marginTop: "102px" }}>
+      </section>
+
+      <section
+        className={`${classes.section} ${classes.recommendationSection}`}
+      >
         <Typography
+          component="h2"
           variant="h5"
-          style={{
-            fontFamily: "Montserrat",
-            fontWeight: "700",
-            color: "white",
-            paddingTop: "102px",
-            paddingLeft: "30px",
-          }}
+          className={classes.sectionTitle}
         >
           More Like This
         </Typography>
-        {arr.includes(id) ? <RecomCarousel2 /> : <ApiRecomCarousel2 />}
-        {}
-      </div>
+
+        {isPersonalizedMovie ? (
+          <RecomCarousel2 />
+        ) : (
+          <ApiRecomCarousel2 />
+        )}
+      </section>
     </div>
   );
 };

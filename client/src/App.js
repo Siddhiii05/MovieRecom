@@ -1,90 +1,106 @@
-import React, { createContext, useEffect, useState } from "react";
-import './App.css';
-import { BrowserRouter, Navigate, Route, Routes, } from 'react-router-dom';
+import React, { createContext, useCallback, useEffect, useState } from "react";
+import "./App.css";
+
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import CastDetail from "./Pages/CastDetail";
-import Header from "./Component/Header";
-import { makeStyles } from '@material-ui/core'
-import Footer from "./Component/Footer";
 import Detailview from "./Pages/Detailview";
 import TrendingToday from "./Pages/TrendingToday";
 import Upcoming from "./Pages/Upcoming";
-import NotFound from "./Pages/NotFound"
+import NotFound from "./Pages/NotFound";
 import SearchPages from "./Pages/SearchPages";
 import RecomDetailView from "./Pages/RecomDetailView";
 import Filter from "./Pages/Filter";
 import Landing from "./Pages/Landing";
+import Header from "./Component/Header";
+import Footer from "./Component/Footer";
 
 export const userContext = createContext();
 
-
 function App() {
-  const useStyles = makeStyles(() => ({
-    App: {
-      display: "flex",
-      flexDirection: "column",
-      backgroundColor: "#da9cc6ff",
-    },
-    footer: {
-      bottom: 0
-    }
-
-  }))
-
-  const classes = useStyles();
-
   const [user, setUser] = useState(null);
+  const [showNav, setShowNav] = useState(true);
 
-  useEffect(() => {
-    const getUser = () => {
-      fetch("http://localhost:5000/auth/login/success", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      })
-        .then((response) => {
-          if (response.status === 200) return response.json();
-          throw new Error("authentication has been failed!");
-        })
-        .then((resObject) => {
-          setUser(resObject.user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getUser();
+  const getUser = useCallback(async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/auth/login/success",
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        setUser(null);
+        return;
+      }
+
+      const data = await response.json();
+
+      setUser(data.success ? data.user : null);
+    } catch (error) {
+      console.error("Authentication check failed:", error);
+      setUser(null);
+    }
   }, []);
 
-  const [showNav, setShowNav] = useState(true);
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
 
   return (
     <BrowserRouter>
-      <div className={classes.App}>
-        {showNav && <Header user={user} />
-        }
-        <Routes>
+      <div className="app">
+        {showNav && <Header user={user} onLogout={() => setUser(null)} />}
 
-          < Route exact path="/" element={<Landing funcNav={setShowNav} />} />
-          < Route exact path="/home" element={<Home />} />
-          < Route exact path="/detail/:id/:title" element={<Detailview />} />
-          < Route exact path="/trending" element={<TrendingToday />} />
-          < Route exact path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-          < Route exact path="/casts/:id" element={<CastDetail />} />
-          < Route exact path="/upcoming" element={<Upcoming />} />
-          < Route exact path="/search/:id" element={<SearchPages />} />
-          < Route exact path="/recomm/detail/:id/:title" element={<RecomDetailView />} />
-          < Route exact path="/filter/:id/:title" element={<Filter />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Footer className={classes.footer} user={user} />
+        <main className="app-main">
+          <Routes>
+            <Route
+              path="/"
+              element={<Landing funcNav={setShowNav} />}
+            />
 
+            <Route path="/home" element={<Home />} />
 
+            <Route
+              path="/detail/:id/:title"
+              element={<Detailview />}
+            />
+
+            <Route path="/trending" element={<TrendingToday />} />
+
+            <Route
+              path="/login"
+              element={user ? <Navigate to="/" replace /> : <Login />}
+            />
+
+            <Route path="/casts/:id" element={<CastDetail />} />
+
+            <Route path="/upcoming" element={<Upcoming />} />
+
+            <Route path="/search/:id" element={<SearchPages />} />
+
+            <Route
+              path="/recomm/detail/:id/:title"
+              element={<RecomDetailView />}
+            />
+
+            <Route
+              path="/filter/:id/:title"
+              element={<Filter />}
+            />
+
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+
+        <Footer user={user} />
       </div>
     </BrowserRouter>
   );

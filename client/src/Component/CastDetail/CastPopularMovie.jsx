@@ -1,76 +1,181 @@
-import { Button, Link, makeStyles, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import "react-alice-carousel/lib/alice-carousel.css";
-import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import {
+  Button,
+  Typography,
+  makeStyles,
+} from "@material-ui/core";
 import AliceCarousel from "react-alice-carousel";
 import Axios from "axios";
-import { img_300 } from "../../Config/Config";
+import {
+  KeyboardDoubleArrowLeft,
+  KeyboardDoubleArrowRight,
+} from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
+
+import "react-alice-carousel/lib/alice-carousel.css";
+import { img_300 } from "../../Config/Config";
 
 const handleDragStart = (e) => e.preventDefault();
 
-const RecmCarousel = () => {
-  const useStyles = makeStyles(() => ({
-    carousel: {
-      marginTop: "42px",
-      height: "270px",
-      width: "100%",
-      display: "flex",
-      alignItems: "center",
+const useStyles = makeStyles(() => ({
+  carousel: {
+    marginTop: "42px",
+    width: "100%",
+    position: "relative",
+    padding: "10px 0 25px",
+    "& .alice-carousel__stage-item": {
+      padding: "0 10px",
+      verticalAlign: "top",
     },
-  }));
+  },
+
+  castCard: {
+    width: "100%",
+    padding: "12px",
+    background: "linear-gradient(145deg, #191919, #0c0c0c)",
+    border: "1px solid rgba(212, 175, 55, 0.15)",
+    borderRadius: "14px",
+    cursor: "pointer",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
+    transition: "all 0.3s ease",
+    minWidth: 0,
+
+    "&:hover": {
+      transform: "translateY(-6px)",
+      border: "1px solid #d4af37",
+      boxShadow: "0 8px 25px rgba(212, 175, 55, 0.15)",
+      background: "linear-gradient(145deg, #222, #111)",
+    },
+  },
+
+  imageWrapper: {
+    width: "100%",
+    height: "220px",
+    overflow: "hidden",
+    borderRadius: "10px",
+    backgroundColor: "#252525",
+  },
+
+  castImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "top center",
+    transition: "transform 0.4s ease",
+
+    "$castCard:hover &": {
+      transform: "scale(1.05)",
+    },
+  },
+
+  castName: {
+    color: "#f5f5f5",
+    fontSize: "17px",
+    fontWeight: 600,
+    marginTop: "14px",
+    textAlign: "left",
+    overflowWrap: "anywhere",
+  },
+
+  characterName: {
+    color: "#d4af37",
+    fontSize: "12px",
+    marginTop: "6px",
+    textAlign: "left",
+    lineHeight: 1.5,
+    overflowWrap: "anywhere",
+  },
+
+  characterLabel: {
+    color: "#999",
+    fontSize: "11px",
+    marginRight: "4px",
+  },
+
+  arrowButton: {
+    position: "absolute",
+    top: "40%",
+    zIndex: 2,
+    color: "#d4af37",
+    backgroundColor: "rgba(15, 15, 15, 0.9)",
+    border: "1px solid rgba(212, 175, 55, 0.5)",
+    borderRadius: "50%",
+    minWidth: "44px",
+    width: "44px",
+    height: "44px",
+    padding: 0,
+    transition: "all 0.3s ease",
+
+    "&:hover": {
+      backgroundColor: "#d4af37",
+      color: "#111",
+    },
+  },
+
+  prevButton: {
+    left: "5px",
+  },
+
+  nextButton: {
+    right: "5px",
+  },
+
+  message: {
+    color: "#aaa",
+    textAlign: "center",
+    padding: "25px 10px",
+    fontSize: "14px",
+  },
+}));
+
+const RecomCarousel = () => {
+  const classes = useStyles();
   const { id } = useParams();
   const navigate = useNavigate();
-  const classes = useStyles();
 
   const [content, setContent] = useState([]);
-  const fetchTrending = async () => {
-    const { data } = await Axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/credits?api_key=b9e11d2c8939104a4a755544e4eb8847&language=en-US`
-    );
-    setContent(data.cast);
-  };
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetchTrending();
-    // eslint-disable-next-line
-  }, []);
-  const items = content.map((c) => (
-    // return(
-    <Button onClick={() => navigate(`/casts/${c.id}`)} width="119%">
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ paddingInline: "0.5rem" }}>
-          <img
-            src={`${img_300}/${c.profile_path}`}
-            onDragStart={handleDragStart}
-            role="presentation"
-            width="100%"
-            height="290"
-          />
-        </div>
-        <div>
-          <Typography
-            style={{ color: "white", marginTop: "1rem", fontSize: "25px" }}
-          >
-            {`${c.name}`.length > 13 ? (
-              <div>{`${`${c.name}`.substring(0, 13)}...`}</div>
-            ) : (
-              <p>{`${c.name}`}</p>
-            )}
-          </Typography>
-          <div style={{ color: "white", fontSize: "10px" }}>
-            as
-            {`${c.character}`.length > 25 ? (
-              <div>{`${`${c.character}`.substring(0, 25)}...`}</div>
-            ) : (
-              <p>{`${c.character}`}</p>
-            )}
-          </div>
-        </div>
-      </div>
-    </Button>
-  ));
+    const fetchCast = async () => {
+      if (!id) {
+        setContent([]);
+        setLoading(false);
+        setError(true);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError(false);
+
+        const { data } = await Axios.get(
+          `https://api.themoviedb.org/3/movie/${id}/credits`,
+          {
+            params: {
+              api_key: "b9e11d2c8939104a4a755544e4eb8847",
+              language: "en-US",
+            },
+          }
+        );
+
+        setContent(data.cast || []);
+      } catch (err) {
+        console.error("Error fetching movie cast:", err);
+        setContent([]);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCast();
+  }, [id]);
+
+
   const responsive = {
     0: {
       items: 2,
@@ -83,6 +188,73 @@ const RecmCarousel = () => {
     },
   };
 
+  const items = content.map((c) => (
+    <div key={c.id} style={{ padding: "5px" }}>
+      <Button
+        className={classes.castCard}
+        onClick={() => navigate(`/casts/${c.id}`)}
+        disableRipple
+        aria-label={`View details for ${c.name}`}
+      >
+        <div className={classes.imageWrapper}>
+          <img
+            src={
+              c.profile_path
+                ? `${img_300}/${c.profile_path}`
+                : "/placeholder.png"
+            }
+            alt={c.name}
+            className={classes.castImage}
+            onDragStart={handleDragStart}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = "/placeholder.png";
+            }}
+          />
+        </div>
+
+        <Typography className={classes.castName}>
+          {c.name?.length > 13
+            ? `${c.name.substring(0, 13)}...`
+            : c.name}
+        </Typography>
+
+        <Typography className={classes.characterName}>
+          <span className={classes.characterLabel}>As </span>
+          {c.character
+            ? c.character.length > 25
+              ? `${c.character.substring(0, 25)}...`
+              : c.character
+            : "Unknown character"}
+        </Typography>
+      </Button>
+    </div>
+  ));
+
+  if (loading) {
+    return (
+      <Typography className={classes.message}>
+        Loading cast members...
+      </Typography>
+    );
+  }
+
+  if (error) {
+    return (
+      <Typography className={classes.message}>
+        Unable to load cast members. Please try again later.
+      </Typography>
+    );
+  }
+
+  if (content.length === 0) {
+    return (
+      <Typography className={classes.message}>
+        No cast members found.
+      </Typography>
+    );
+  }
+
   return (
     <div className={classes.carousel}>
       <AliceCarousel
@@ -91,32 +263,26 @@ const RecmCarousel = () => {
         items={items}
         responsive={responsive}
         controlsStrategy="responsive"
-        autoPlay={true}
-        autoPlayInterval={5000}
-        infinite={true}
-        renderPrevButton={() => {
-          return (
-            <Button
-              className="p-4 absolute left-0 top-0"
-              style={{ marginInline: "20px", color: "white" }}
-            >
-              <KeyboardDoubleArrowLeftIcon fontSize="large" />
-            </Button>
-          );
-        }}
-        renderNextButton={() => {
-          return (
-            <Button
-              className="p-4 absolute right-0 top-0"
-              style={{ marginInline: "20px", color: "white" }}
-            >
-              <KeyboardDoubleArrowRightIcon fontSize="large" />
-            </Button>
-          );
-        }}
+        infinite={content.length > 5}
+        renderPrevButton={() => (
+          <Button
+            className={`${classes.arrowButton} ${classes.prevButton}`}
+            aria-label="Previous cast members"
+          >
+            <KeyboardDoubleArrowLeft fontSize="large" />
+          </Button>
+        )}
+        renderNextButton={() => (
+          <Button
+            className={`${classes.arrowButton} ${classes.nextButton}`}
+            aria-label="Next cast members"
+          >
+            <KeyboardDoubleArrowRight fontSize="large" />
+          </Button>
+        )}
       />
     </div>
   );
 };
 
-export default RecmCarousel;
+export default RecomCarousel;

@@ -1,224 +1,196 @@
-import {
-  AppBar,
-  Button,
-  makeStyles,
-  TextField,
-  Toolbar,
-  Tooltip,
-  Typography,
-} from "@material-ui/core";
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { AppBar, Button, TextField, Toolbar } from "@material-ui/core";
+
+import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
-import "./style.css";
+
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
 
-export default function Header({ user }) {
-  const [navSize, setnavSize] = useState("5.5rem");
-  const [navColor, setnavColor] = useState("#e2e7e9");
-  const [navTextCol, setNavTextCol] = useState("black");
-  const [loginpadding, setLoginpadding] = useState("2.5rem");
+import "./style.css";
 
-  //   *****************Provided On Scroll Effect*****************
-  const listenScrollEvent = () => {
-    window.scrollY > 10 ? setnavColor("#19272ec2") : setnavColor("#e2e7e9");
-    window.scrollY > 10 ? setnavSize("4.5rem") : setnavSize("5.5rem");
-    window.scrollY > 10 ? setNavTextCol("white") : setNavTextCol("black");
-    window.scrollY > 10 ? setLoginpadding("1rem") : setLoginpadding("1.9rem");
-  };
+export default function Header({ user, onLogout }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
+  const navigate = useNavigate();
+
+  // Change the header appearance when scrolling.
   useEffect(() => {
-    window.addEventListener("scroll", listenScrollEvent);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
     return () => {
-      window.removeEventListener("scroll", listenScrollEvent);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  //   ***************** On Scroll Effect Ended*****************
+  // Search for movies.
+  const handleSearch = (event) => {
+    event.preventDefault();
 
-  // ****************************logout functionality starts**********************************
+    const query = searchText.trim();
 
-  const logout = () => {
-    window.open("http://localhost:5000/auth/logout", "_self");
+    if (!query) {
+      return;
+    }
+
+    navigate(`/search/${encodeURIComponent(query)}`);
+    setSearchText("");
   };
 
-  // ****************************logout functionality end**********************************
+  // Log out the current user.
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/auth/logout", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+        },
+      });
 
-  //**************************Search Part Start***************************************/
+      if (!response.ok) {
+        throw new Error("Logout failed");
+      }
 
-  const [searchText, setSearchText] = useState("");
-  // const str=searchText
+      const data = await response.json();
 
-  //**************************Search Part End***************************************/
+      if (data.success) {
+        onLogout(); // Clear the user from React state
+        navigate("/", { replace: true }); // Redirect to landing page
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
-  const useStyles = makeStyles(() => ({
-    body: {
-      color: "pink",
-    },
-    title: {
-      //   flex: 1,
-      color: "#123d6e",
-      fontFamily: "Montserrat",
-      fontWeight: "bold",
-      cursor: "pointer",
-      paddingLeft: "10px",
-    },
-    btn: {
-      color: navTextCol,
-    },
-    cssLabel: {
-      color: navTextCol,
-      "&.Mui-focused": {
-        color: navTextCol,
-      },
-    },
-    multilineColor: {
-      color: navTextCol,
-      "&.Mui-focused": {
-        color: navTextCol,
-      },
-    },
-  }));
-  const classes = useStyles();
-  const navigate = useNavigate();
+  // Get the user's display name safely.
+  const getDisplayName = () => {
+    if (typeof user?.displayName === "string" && user.displayName.trim()) {
+      return user.displayName;
+    }
+
+    if (typeof user?.name === "string" && user.name.trim()) {
+      return user.name;
+    }
+
+    if (user?.name?.givenName) {
+      return user.name.givenName;
+    }
+
+    return "Account";
+  };
+
+  const displayName = getDisplayName();
 
   return (
-    <>
-      <AppBar
-        style={{
-          backgroundColor: navColor,
-          height: navSize,
-          transition: "all 0.5s",
-        }}
-        elevation={0}
-      >
-        <Toolbar
-          style={{
-            backgroundColor: navColor,
-            height: navSize,
-            transition: "all 0.5s",
-          }}
+    <AppBar
+      position="sticky"
+      elevation={0}
+      className={`cine-header ${scrolled ? "cine-header-scrolled" : ""}`}
+    >
+      <Toolbar className="cine-toolbar">
+        {/* Brand */}
+        <button
+          type="button"
+          className="cine-brand"
+          onClick={() => navigate("/home")}
+          aria-label="CineGenie home"
         >
-          <Typography
-            className={classes.title}
-            onClick={() => navigate("/home")}
-            variant="h6"
-            style={{ color: navTextCol }}
-          >
-            CineGenie
-          </Typography>
+          <span className="cine-brand-icon">C</span>
 
+          <span className="cine-brand-text">
+            Cine<span>Genie</span>
+          </span>
+        </button>
+
+        {/* Navigation links */}
+        <nav className="cine-navigation" aria-label="Main navigation">
           <Button
-            className={classes.btn}
-            style={{ color: navTextCol, marginInline: "2rem" }}
+            className="cine-nav-link"
             onClick={() => navigate("/trending")}
           >
-            Trending Today
+            Trending
           </Button>
+
           <Button
-            className={classes.btn}
-            style={{ color: navTextCol, margin: "0rem" }}
+            className="cine-nav-link"
             onClick={() => navigate("/upcoming")}
           >
             Upcoming
           </Button>
+        </nav>
+
+        {/* Movie search */}
+        <form className="cine-search" onSubmit={handleSearch}>
+          <SearchIcon className="cine-search-icon" />
+
           <TextField
-            InputLabelProps={{
-              classes: { root: classes.cssLabel, focused: classes.cssFocused },
-            }}
+            className="cine-search-input"
+            value={searchText}
+            onChange={(event) => setSearchText(event.target.value)}
+            placeholder="Search movies..."
+            variant="standard"
+            fullWidth
             InputProps={{
-              className: classes.multilineColor,
+              disableUnderline: true,
+              inputProps: {
+                "aria-label": "Search movies",
+              },
             }}
-
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                setSearchText(e.target.value)
-                navigate(`/search/${searchText}`)
-              }
-            }}
-
-            id="outlined-search"
-            label="Search Movies Here"
-            type="search"
-            style={{
-              marginLeft: "2rem",
-              marginBottom: 15,
-              flex: "1",
-              color: setNavTextCol,
-            }}
-            onChange={(e) => setSearchText(e.target.value)}
           />
-          <Button
-          className={classes.btn}
-            style={{ marginBottom: 15, color: setNavTextCol, height: "50px" }}
-            onClick={() => navigate(`/search/${searchText}`)}
+
+          <button
+            type="submit"
+            className="cine-search-submit"
+            aria-label="Submit movie search"
+            disabled={!searchText.trim()}
           >
             <SearchIcon />
-          </Button>
+          </button>
+        </form>
+
+        {/* Account controls */}
+        {/* Account controls */}
+        <div className="cine-account">
           {user ? (
             <>
+              <Tooltip title={displayName} arrow>
+                <button
+                  type="button"
+                  className="cine-account-button"
+                  aria-label={`Signed in as ${displayName}`}
+                >
+                  <AccountCircleIcon />
+                  <span className="cine-account-name">{displayName}</span>
+                </button>
+              </Tooltip>
+
               <Button
-                className={classes.btn}
-                style={{
-                  height:"3rem",
-                  marginLeft: "1rem",
-                  paddingBlock: loginpadding,
-                }}
+                className="cine-login-button cine-logout-button"
+                onClick={handleLogout}
+                startIcon={<LogoutIcon />}
               >
-                <Tooltip title={user.displayName} style={{ fontSize: "300px" }}>
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div>
-                      <AccountCircleIcon fontSize="large" />
-                    </div>
-                    <div>
-                      <Typography style={{ fontSize: "12px" }}>
-                        {user.name.givenName}
-                      </Typography>
-                    </div>
-                  </div>
-                </Tooltip>
-              </Button>
-              <Button
-                onClick={logout}
-                className={classes.btn}
-                style={{
-                  height:"3rem",
-                  paddingBlock: loginpadding,
-                }}
-              >
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <div>
-                    <LogoutIcon fontSize="small" />
-                  </div>
-                  <div>
-                    <Typography style={{ fontSize: "8px" }}>Logout</Typography>
-                  </div>
-                </div>
+                Logout
               </Button>
             </>
           ) : (
             <Button
+              className="cine-login-button"
               onClick={() => navigate("/login")}
-              className={classes.btn}
-              style={{
-                height: "3rem",
-                paddingBlock: loginpadding,
-              }}
+              startIcon={<AccountCircleIcon />}
             >
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <div>
-                  <AccountCircleIcon fontSize="small" />
-                </div>
-                <div>
-                  <Typography>Login</Typography>
-                </div>
-              </div>
+              Login
             </Button>
           )}
-          {/* </Link> */}
-        </Toolbar>
-      </AppBar>
-    </>
+        </div>
+      </Toolbar>
+    </AppBar>
   );
 }

@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BelowBanner from "../Component/Landing/BelowBanner";
 import TopBanner from "../Component/Landing/TopBanner";
 
-const Landing = (props) => {
-  props.funcNav(true);
+const Landing = ({ funcNav }) => {
+  useEffect(() => {
+    if (funcNav) {
+      funcNav(true);
+    }
+  }, [funcNav]);
 
   return (
-    <div>
+    <main className="landing-page">
       <TopBanner />
-      <BelowBanner/>
-    </div>
+      <BelowBanner />
+    </main>
   );
 };
 
