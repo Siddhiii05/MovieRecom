@@ -1,30 +1,28 @@
-# CineGenie 🎬
+# CineGenie Backend 🎬
 
-CineGenie is a movie recommendation web application that helps users discover movies based on their preferences, genres, and trending movies.
+The CineGenie backend handles authentication, movie-related API requests, and integration with the movie recommendation system.
 
 ## 🚀 Tech Stack
-- React.js
-- JavaScript
-- CSS
-- TMDB API
+- Node.js
+- Express.js
+- PostgreSQL
+- Python Flask (Recommendation Engine)
 
 ## ✨ Features
-- Browse trending and upcoming movies.
-- Explore movie details.
-- Discover movies based on genres and preferences.
-- View movie recommendations.
-- Responsive user interface.
+- RESTful APIs for movie-related operations.
+- User authentication using Google OAuth.
+- Integration with a Python-based movie recommendation engine.
 
 ## ⚙️ Installation
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Siddhiii05/MovieRecom.git
+   git clone https://github.com/Siddhiii05/Movie_Recom.git
    ```
 
-2. Navigate to the frontend directory:
+2. Navigate to the backend directory:
    ```bash
-   cd MovieRecom/client
+   cd Movie_Recom
    ```
 
 3. Install dependencies:
@@ -32,15 +30,23 @@ CineGenie is a movie recommendation web application that helps users discover mo
    npm install
    ```
 
-4. Create a `.env` file in the `client` directory:
+4. Configure the `.env` file with the required environment variables:
    ```env
-   REACT_APP_API_KEY=your_tmdb_api_key
+   PORT=5000
+   DATABASE_URL=your_postgresql_connection_string
+   SESSION_SECRET=your_session_secret
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
    ```
 
-5. Start the development server:
+5. Start the server:
    ```bash
    npm start
    ```
+
+## 🐍 Recommendation Engine
+
+Install the required Python dependencies and start the Flask recommendation service separately.
 
 ## 📄 License
 This project is intended for educational purposes.
